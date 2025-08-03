@@ -14,6 +14,7 @@ def parse_args():
     parser.add_argument('--epochs', type=int, default=100, help='Number of optimization steps')
     parser.add_argument('--style-weight', type=float, default=1000.0, help='Weight for style loss')
     parser.add_argument('--content-weight', type=float, default=1.0, help='Weight for content loss')
+    parser.add_argument('--lr', type=float, default=0.01, help='Learning rate for optimization')
 
     return parser.parse_args()
 
