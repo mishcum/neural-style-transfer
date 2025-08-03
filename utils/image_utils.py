@@ -8,6 +8,8 @@ TRANSFORMS = v2.Compose([v2.ToImage(), v2.ToDtype(torch.float32, scale=True)])
 def get_images(img_path : str, style_img_path: str) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     img = Image.open(img_path).convert('RGB')
     img_style = Image.open(style_img_path).convert('RGB')
+
+    img_style = img_style.resize(img.size, Image.LANCZOS)
     
     img = TRANSFORMS(img).unsqueeze(0)
     result_img = img.clone()
