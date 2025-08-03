@@ -30,15 +30,15 @@ python main.py --content <path/to/content.jpg> --style <path/to/style.jpg> --out
 * `--content` — путь к изображению, к которому вы хотите применить стиль.
 * `--style` — путь к изображению стиля.
 * `--output` — путь для сохранения результата (опционально).
-* `--epochs` — количество итераций оптимизации (по умолчанию 100).
+* `--epochs` — количество итераций (по умолчанию 100).
 * `--lr` — learning rate оптимизатора (по умолчанию 0.01).
-* `--content-weight` - вес потерь по контенту (по умолчаеию 1.0)
-* `--style-weight` - вес потерь по стилю (по умолчаеию 1000.0)
+* `--content-weight` - вес потерь по контенту (по умолчанию 1.0)
+* `--style-weight` - вес потерь по стилю (по умолчанию 1000.0)
 
 ## 🌳 Структура проекта
 ```
 .
-├── examples # примеры работы
+├── examples                      # примеры работы
 │   ├── contents
 │   │   ├── image1.jpg
 │   │   └── image2.jpg
@@ -49,14 +49,14 @@ python main.py --content <path/to/content.jpg> --style <path/to/style.jpg> --out
 │       ├── style1.jpg
 │       └── style2.jpg
 ├── loss
-│   └── losses.py # функции для расчета потерь
-├── main.py # запуск, обработка аргументов
+│   └── losses.py                 # функции для расчета потерь
+├── main.py                       # запуск, обработка аргументов
 ├── models
-│   └── model.py # часть обученной модели VGG19
-├── README.md # вы тут)
-├── requirements.txt # зависимости
-├── setup.py # сетап
-├── style_transfer.py # перенос стиля
+│   └── model.py                  # часть обученной модели VGG19
+├── README.md                     # вы тут)
+├── requirements.txt              # зависимости
+├── setup.py                      # сетап
+├── style_transfer.py             # перенос стиля
 └── utils
-    └── image_utils.py # работа с изображениями
+    └── image_utils.py            # работа с изображениями
 ```
