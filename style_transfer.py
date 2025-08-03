@@ -1,25 +1,21 @@
-from models.model import Model
 import torch
 from torch.optim import Adam
-from loss.losses import get_content_loss, gram_matrix, get_style_loss
 from tqdm import tqdm
-from PIL import Image
-import numpy as np
 
+from models.model import Model
+from loss.losses import get_content_loss, gram_matrix, get_style_loss
+from utils.image_utils import postprocess
 
-def style_transfer(img : torch.Tensor, img_style : torch.Tensor, result_img : torch.Tensor) -> Image:
+def style_transfer(img : torch.Tensor, img_style : torch.Tensor, 
+                   result_img : torch.Tensor, content_weight : float = 1.0,
+                   style_weight : float = 1000.0, epochs : int = 100) -> torch.Tensor:
+    
     model = Model()
-
     img_outs = model(img)
     img_style_outs = model(img_style)
 
     gram_style = [gram_matrix(x) for x in img_style_outs[:model.style_layers]]
-
-    content_weight = 1
-    style_weight = 1000
     best_loss = torch.inf
-
-    epochs = 100
 
     optimizer = Adam(params=[result_img], lr=0.01)
     best_img = result_img.clone()
@@ -39,13 +35,4 @@ def style_transfer(img : torch.Tensor, img_style : torch.Tensor, result_img : to
             best_loss = loss
             best_img = result_img.clone()
 
-    x = best_img.detach().squeeze()
-    low, hi = torch.amin(x), torch.amax(x)
-    x = (x - low) / (hi - low) * 255.0
-    x = x.permute(1, 2, 0)
-    x = x.numpy()
-    x = np.clip(x, 0, 255).astype('uint8')
-
-    image = Image.fromarray(x, 'RGB')
-
-    return image
+    return postprocess(best_img)
