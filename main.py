@@ -2,6 +2,7 @@ import argparse
 import os
 from utils.image_utils import get_images
 from style_transfer import style_transfer
+import torch
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Neural Style Transfer using VGG19')
@@ -32,6 +33,8 @@ def generate_output_path(content_path: str) -> str:
 def main():
     args = parse_args()
 
+    set_device()
+
     img, img_style, result_img = get_images(args.content, args.style)
     result_image = style_transfer(
         img,
@@ -44,6 +47,14 @@ def main():
 
     output_path = args.output if args.output else generate_output_path(args.content)
     result_image.save(output_path)
+
+def set_device():
+    if torch.mps.is_available():
+        torch.set_default_device('mps')
+    elif torch.cuda.is_available():
+        torch.set_default_device('cuda')
+    else:
+        torch.set_default_device('cpu')
 
 if __name__ == '__main__':
     main()
